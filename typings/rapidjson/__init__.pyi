@@ -7,7 +7,12 @@
 #
 
 import typing as t
+from enum import IntFlag
 
+class _PARSE_MODE(IntFlag):
+    PM_COMMENTS = 1
+    PM_NONE = 0
+    PM_TRAILING_COMMAS = 2
 
 __rapidjson_exact_version__: str
 __rapidjson_version__: str
@@ -22,7 +27,6 @@ _JSONType = t.Union[
     t.Dict[str, "_JSONType"],
     t.List["_JSONType"],
 ]
-
 
 # Const types
 _BM_NONE_TYPE = t.Literal[0]
@@ -77,9 +81,9 @@ NM_DECIMAL: _NM_DECIMAL_TYPE = 2
 NM_NAN: _NM_NAN_TYPE = 1
 NM_NATIVE: _NM_NATIVE_TYPE = 4
 NM_NONE: _NM_NONE_TYPE = 0
-PM_COMMENTS: _PM_COMMENTS_TYPE = 1
-PM_NONE: _PM_NONE_TYPE = 0
-PM_TRAILING_COMMAS: _PM_TRAILING_COMMAS_TYPE = 2
+PM_COMMENTS: t.Literal[_PARSE_MODE.PM_COMMENTS] = _PARSE_MODE.PM_COMMENTS
+PM_NONE: t.Literal[_PARSE_MODE.PM_NONE] = _PARSE_MODE.PM_NONE
+PM_TRAILING_COMMAS: t.Literal[_PARSE_MODE.PM_TRAILING_COMMAS] = _PARSE_MODE.PM_TRAILING_COMMAS
 UM_CANONICAL: _UM_CANONICAL_TYPE = 1
 UM_HEX: _UM_HEX_TYPE = 2
 UM_NONE: _UM_NONE_TYPE = 0
@@ -100,7 +104,7 @@ _DatetimeMode = t.Literal[
     _DM_UNIX_TIME_TYPE,
 ]
 _UUIDMode = t.Literal[_UM_CANONICAL_TYPE, _UM_HEX_TYPE, _UM_NONE_TYPE]
-_ParseMode = t.Literal[_PM_COMMENTS_TYPE, _PM_NONE_TYPE, _PM_TRAILING_COMMAS_TYPE]
+_ParseMode = _PARSE_MODE
 _WriteMode = t.Literal[_WM_COMPACT_TYPE, _WM_PRETTY_TYPE, _WM_SINGLE_LINE_ARRAY_TYPE]
 _BytesMode = t.Literal[_BM_NONE_TYPE, _BM_UTF8_TYPE]
 _IterableMode = t.Literal[_IM_ANY_ITERABLE_TYPE, _IM_ONLY_LISTS_TYPE]
@@ -188,7 +192,7 @@ class Decoder:
         self,
         datetime_mode: t.Optional[_DatetimeMode] = DM_NONE,
         number_mode: t.Optional[_NumberMode] = NM_NAN,
-        parse_mode: t.Optional[_ParseMode] = PM_NONE,
+        parse_mode: t.Optional[_ParseMode] = _ParseMode.PM_NONE,
         uuid_mode: t.Optional[_UUIDMode] = UM_NONE,
     ) -> None: ...
     def __call__(
