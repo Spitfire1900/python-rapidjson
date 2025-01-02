@@ -81,6 +81,7 @@ JSONC Support
 RapidJSON_ supports decoding JSONC_ using parsing flags. 
 
 .. code-block:: python
+    
     >>> import rapidjson
     >>> rapidjson.Decoder(parse_mode=rapidjson.PM_COMMENTS | rapidjson.PM_TRAILING_COMMAS)('''\
     {
@@ -90,7 +91,7 @@ RapidJSON_ supports decoding JSONC_ using parsing flags.
     ''')
     {'bar': 'baz', 'foo': 100}
 
-    
+
 Development
 -----------
 
